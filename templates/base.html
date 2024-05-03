@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Seguimiento de ODS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.2/css/all.css">
+</head>
+
+<body>
+
+    <div class="sidenav" id="sidenav">
+        <div class="logo-container">
+            <div class="logo-text">ODS</div>
+        </div>
+
+        <ul class="sidenav-nav">
+            <li class="sidenav-nav-item">
+                <a class="sidenav-nav-link" href="/" data-link-id="info">
+                    <i class="sidenav-link-icon fa-solid fa-hand-holding-droplet"></i>
+                    <span class="sidenav-link-text">Información</span>
+                </a>
+            </li>
+            
+            <li class="sidenav-nav-item">
+                <a class="sidenav-nav-link" href="progress" data-link-id="progress">
+                    <i class="sidenav-link-icon fa fa-hand"></i>
+                    <span class="sidenav-link-text">Progreso</span>
+                </a>
+            </li>
+
+            <li class="sidenav-nav-item">
+                <a class="sidenav-nav-link" href="stats" data-link-id="stats">
+                    <i class="sidenav-link-icon fa-solid fa-chart-simple"></i>
+                    <span class="sidenav-link-text">Estadisticas</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="body" id="mainBody">
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    {% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidenavLinks = document.querySelectorAll('.sidenav-nav-link');
+
+            // Recuperar el ID del enlace activado del almacenamiento local
+            const activeLinkId = localStorage.getItem('activeLinkId');
+
+            // Aplicar la clase 'activated' al enlace activado
+            if (activeLinkId) {
+                const activeLink = document.querySelector(`.sidenav-nav-link[data-link-id="${activeLinkId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+
+            sidenavLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    // Remover la clase 'activated' de todos los enlaces
+                    sidenavLinks.forEach(function (el) {
+                        el.classList.remove('active');
+                    });
+
+                    // Agregar la clase 'activated' al enlace seleccionado
+                    this.classList.add('active');
+
+                    // Obtener y almacenar el ID del enlace activado en el almacenamiento local
+                    const linkId = this.dataset.linkId;
+                    localStorage.setItem('activeLinkId', linkId);
+                });
+            });
+        });
+    </script>
+    {% endblock %}
+</body>
+
+</html>

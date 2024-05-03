@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="title">Objetivos de Desarrollo Sostenible</h1>
+
+<ul>
+    {% for od in ods %}
+    <div class="card">
+        <li>
+            <h2>{{ od.nombre }}</h2>
+            <p>{{ od.descripcion }}</p>
+        </li>
+    </div>
+    {% endfor %}
+</ul>
+{% endblock %}

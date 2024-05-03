@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="title">Estadísticas</h1>
+<div id="chart"></div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+   var graphData = {{ graphJSON }} ;
+  Plotly.newPlot('chart', graphData.data, graphData.layout);
+</script>
+{% endblock %}
